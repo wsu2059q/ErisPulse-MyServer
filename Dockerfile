@@ -1,27 +1,26 @@
-FROM python:3.13-slim AS production
+# ===========================================================================
+# ErisPulse-MyServer Docker Image
+# https://github.com/wsu2059q/ErisPulse-MyServer
+#
+# Usage:
+#   docker build -t ghcr.io/wsu2059q/erispulse-myserver:latest .
+#
+# Environment variables (runtime):
+#   ERISPULSE_DASHBOARD_TOKEN   - Dashboard 登录令牌
+#
+# ===========================================================================
+FROM erispulse/erispulse:latest
 
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
-
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    UV_SYSTEM_PYTHON=1 \
-    UV_COMPILE_BYTECODE=1 \
-    UV_LINK_MODE=copy
-
-WORKDIR /app
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    openssh-client \
-    && rm -rf /var/lib/apt/lists/*
+LABEL org.opencontainers.image.title="ErisPulse-MyServer" \
+      org.opencontainers.image.description="ErisPulse 服务器管理模块" \
+      org.opencontainers.image.url="https://github.com/wsu2059q/ErisPulse-MyServer" \
+      org.opencontainers.image.source="https://github.com/wsu2059q/ErisPulse-MyServer"
 
 COPY pyproject.toml README.md ./
 COPY MyServer/ ./MyServer/
 
 RUN uv pip install --system -e .
 
-RUN mkdir -p /app/config
-
-VOLUME ["/app/config"]
-EXPOSE 8000
-
-CMD ["epsdk", "run", "main.py"]
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    openssh-client \
+    && rm -rf /var/lib/apt/lists/*
