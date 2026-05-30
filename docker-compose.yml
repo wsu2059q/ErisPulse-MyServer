@@ -1,0 +1,15 @@
+services:
+  myserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ghcr.io/wsu2059q/erispulse-myserver:latest
+    container_name: erispulse-myserver
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./config:/app/config
+    environment:
+      - TZ=Asia/Shanghai
+      - ERISPULSE_DASHBOARD_TOKEN=${ERISPULSE_DASHBOARD_TOKEN:-}
+    restart: unless-stopped

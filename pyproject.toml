@@ -1,0 +1,17 @@
+[project]
+name = "ErisPulse-MyServer"
+version = "1.0.0"
+description = "服务器管理模块 - 支持远程监控、WebSocket终端、Dashboard管理"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [ { name = "wsu2059q", email = "wsu2059@qq.com" } ]
+dependencies = [
+    "asyncssh>=2.14.0",
+]
+
+[project.urls]
+"homepage" = "https://github.com/wsu2059q/ErisPulse-MyServer"
+
+[project.entry-points."erispulse.module"]
+"MyServer" = "MyServer:Main"
