@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0b1322">
+<meta name="color-scheme" content="dark">
+<title>Server Status</title>
+<script>
+/*__I18N_JS__*/
+</script>
+<style>
+/*__PUBLIC_CSS__*/
+</style>
+</head>
+<body style="background:#0b1322">
+<div class="glow glow-a"></div>
+<div class="glow glow-b"></div>
+
+<header class="hero">
+  <div class="hero-label">MYSERVER · STATUS</div>
+  <h1 id="page-title">Server Status</h1>
+  <p class="hero-sub" id="page-sub">–</p>
+</header>
+
+<main class="wrap">
+  <div class="stat-grid">
+    <div class="stat-tile"><div class="stat-label" data-i18n="ms_pub_machines">机器</div><div class="stat-num" id="st-total">–</div></div>
+    <div class="stat-tile"><div class="stat-label" data-i18n="ms_pub_online">在线</div><div class="stat-num accent" id="st-online">–</div></div>
+    <div class="stat-tile"><div class="stat-label" data-i18n="ms_pub_checked">最近检查</div><div class="stat-num time" id="st-updated">–</div></div>
+    <div class="stat-tile"><div class="stat-label" data-i18n="ms_pub_refresh">刷新</div><div class="stat-num time" id="st-refresh">–</div></div>
+  </div>
+
+  <div id="machine-list" class="machine-list"></div>
+
+  <h2 class="subheading" data-i18n="ms_pub_events_title">最近事件</h2>
+  <div id="event-feed" class="glass-panel event-feed"></div>
+</main>
+
+<footer class="foot">
+  <span>powered by <a href="https://github.com/wsu2059q/ErisPulse-MyServer" target="_blank" rel="noopener">ErisPulse-MyServer</a></span>
+  <button id="btn-refresh" class="foot-refresh" data-i18n="ms_pub_manual_refresh">手动刷新</button>
+</footer>
+
+<script>
+/*__PUBLIC_JS__*/
+</script>
+</body>
+</html>

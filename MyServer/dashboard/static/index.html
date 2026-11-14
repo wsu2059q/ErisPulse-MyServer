@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0b1322">
+<meta name="color-scheme" content="dark">
+<title>MyServer</title>
+<script>
+/*__I18N_JS__*/
+</script>
+<script>
+/*__UI_JS__*/
+</script>
+<style>
+/*__APP_CSS__*/
+</style>
+</head>
+<body style="background:#0b1322">
+<div class="ms-glow ms-glow-a"></div>
+<div class="ms-glow ms-glow-b"></div>
+
+<div class="ms-shell">
+  <aside class="ms-sidebar">
+    <div class="ms-brand">MyServer</div>
+    <div class="ms-brand-ver" id="brand-version">v__MS_VERSION__</div>
+    <nav class="ms-nav">
+      <a class="ms-nav-item active" data-tab="overview">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        <span data-i18n="ms_nav_overview">概览</span>
+      </a>
+      <a class="ms-nav-item" data-tab="terminal">
+        <svg viewBox="0 0 24 24"><path d="M5 7l5 5-5 5M12 17h7"/></svg>
+        <span data-i18n="ms_nav_terminal">终端</span>
+      </a>
+      <a class="ms-nav-item" data-tab="files">
+        <svg viewBox="0 0 24 24"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        <span data-i18n="ms_nav_files">文件</span>
+      </a>
+      <a class="ms-nav-item" data-tab="monitor">
+        <svg viewBox="0 0 24 24"><path d="M3 17l5-6 4 3 5-7 4 4"/></svg>
+        <span data-i18n="ms_nav_monitor">监控</span>
+      </a>
+      <a class="ms-nav-item" data-tab="audit">
+        <svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg>
+        <span data-i18n="ms_nav_audit">审计</span>
+      </a>
+      <div class="ms-nav-sep"></div>
+      <a class="ms-nav-item" data-tab="settings">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.5-2.4 1a7 7 0 0 0-2-1.2L14 3h-4l-.5 2.6a7 7 0 0 0-2 1.2l-2.4-1-2 3.5 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.5 2.4-1a7 7 0 0 0 2 1.2L10 21h4l.5-2.6a7 7 0 0 0 2-1.2l2.4 1 2-3.5-2-1.5c.1-.4.1-.8.1-1.2z"/></svg>
+        <span data-i18n="ms_nav_settings">设置</span>
+      </a>
+    </nav>
+    <div class="ms-sidebar-foot">
+      <span data-i18n="ms_connected">已连接</span>
+      <button class="ms-btn ms-lang-btn" id="btn-lang" data-i18n-title="ms_lang_title" title="语言">EN</button>
+    </div>
+  </aside>
+
+  <main class="ms-main">
+    <!-- 概览 -->
+    <section id="tab-overview" class="ms-tab active">
+      <header class="ms-page-head">
+        <div>
+          <h1 class="ms-page-title" data-i18n="ms_nav_overview">概览</h1>
+        </div>
+        <div class="ms-toolbar">
+          <button class="ms-btn" id="btn-refresh" data-i18n="ms_refresh">刷新</button>
+          <button class="ms-btn ms-btn-primary" id="btn-add-machine" data-i18n="ms_add_machine">＋ 添加机器</button>
+        </div>
+      </header>
+      <div class="ms-stat-grid" id="stat-grid"></div>
+      <h2 class="ms-section-title" data-i18n="ms_fleet">舰队</h2>
+      <div id="machine-grid" class="ms-card-grid"></div>
+      <h2 class="ms-section-title" data-i18n="ms_recent_alerts">最近告警</h2>
+      <div id="alert-feed" class="ms-card ms-feed"></div>
+    </section>
+
+    <!-- 终端 -->
+    <section id="tab-terminal" class="ms-tab">
+      <header class="ms-page-head">
+        <div>
+          <h1 class="ms-page-title" data-i18n="ms_nav_terminal">终端</h1>
+        </div>
+        <div class="ms-toolbar">
+          <span id="term-machine"></span>
+          <span id="term-session-host"></span>
+          <button class="ms-btn ms-btn-primary" id="btn-term-connect" data-i18n="ms_connect">连接</button>
+        </div>
+      </header>
+      <div class="ms-card ms-terminal-card">
+        <div class="ms-term-tabs" id="term-tabs"></div>
+        <div id="term-wrap" class="ms-term-wrap"></div>
+        <div class="ms-term-bar">
+          <input id="term-cmd" class="ms-input ms-grow" placeholder="输入命令，回车发送到当前终端" data-i18n-placeholder="ms_term_cmd_ph">
+          <button class="ms-btn" data-quick="\x03" title="Ctrl+C">^C</button>
+          <button class="ms-btn" data-quick="\x0c" title="Ctrl+L 清屏" data-i18n-title="ms_title_clear">^L</button>
+          <button class="ms-btn" data-quick="\x04" title="Ctrl+D">^D</button>
+          <button class="ms-btn" data-quick="\t" title="Tab 补全" data-i18n-title="ms_title_complete">Tab</button>
+          <button class="ms-btn" data-quick="\x1b[A" title="上一条命令" data-i18n-title="ms_title_prev">↑</button>
+          <button class="ms-btn" data-quick="\x1b[B" title="下一条命令" data-i18n-title="ms_title_next">↓</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 文件 -->
+    <section id="tab-files" class="ms-tab">
+      <header class="ms-page-head">
+        <div>
+          <h1 class="ms-page-title" data-i18n="ms_nav_files">文件</h1>
+        </div>
+      </header>
+      <div class="ms-card">
+        <div class="ms-toolbar ms-toolbar-row">
+          <span id="files-machine"></span>
+          <span id="files-path-host"></span>
+          <button class="ms-btn" id="btn-files-up" data-i18n="ms_level_up">上一级</button>
+          <button class="ms-btn" id="btn-files-go" data-i18n="ms_refresh">刷新</button>
+          <button class="ms-btn" id="btn-files-mkdir" data-i18n="ms_new_folder">新建文件夹</button>
+          <span id="files-upload-host"></span>
+        </div>
+        <div id="files-crumb" class="ms-crumb"></div>
+        <div id="files-table"></div>
+      </div>
+    </section>
+
+    <!-- 监控 -->
+    <section id="tab-monitor" class="ms-tab">
+      <header class="ms-page-head">
+        <div>
+          <h1 class="ms-page-title" data-i18n="ms_nav_monitor">监控</h1>
+        </div>
+        <div class="ms-toolbar">
+          <span id="mon-machine"></span>
+          <span id="mon-metric"></span>
+          <span id="mon-hours"></span>
+        </div>
+      </header>
+      <div id="mon-grid" class="ms-card-grid"></div>
+      <h2 class="ms-section-title" data-i18n="ms_history_chart">历史曲线</h2>
+      <div class="ms-card ms-chart-card">
+        <canvas id="mon-chart" width="1100" height="320"></canvas>
+      </div>
+    </section>
+
+    <!-- 审计 -->
+    <section id="tab-audit" class="ms-tab">
+      <header class="ms-page-head">
+        <div>
+          <h1 class="ms-page-title" data-i18n="ms_nav_audit">审计</h1>
+        </div>
+        <div class="ms-toolbar">
+          <span id="audit-machine"></span>
+          <select id="audit-action" class="ms-input ms-input-select">
+            <option value="" data-i18n="ms_audit_all">全部动作</option>
+            <option value="exec" data-i18n="ms_audit_exec">执行</option>
+            <option value="exec_blocked" data-i18n="ms_audit_blocked">拦截</option>
+            <option value="session" data-i18n="ms_audit_session">会话</option>
+            <option value="terminal" data-i18n="ms_audit_terminal">终端</option>
+            <option value="upload" data-i18n="ms_audit_upload">上传</option>
+            <option value="download" data-i18n="ms_audit_download">下载</option>
+            <option value="file_write" data-i18n="ms_audit_file_write">在线编辑</option>
+            <option value="file_delete" data-i18n="ms_audit_file_delete">删除</option>
+            <option value="machine_add" data-i18n="ms_audit_machine_add">添加机器</option>
+            <option value="machine_remove" data-i18n="ms_audit_machine_remove">移除机器</option>
+            <option value="config_save" data-i18n="ms_audit_config_save">配置变更</option>
+          </select>
+        </div>
+      </header>
+      <div class="ms-card" id="audit-table"></div>
+      <h2 class="ms-section-title" data-i18n="ms_alert_history">告警历史</h2>
+      <div class="ms-card" id="audit-alerts"></div>
+    </section>
+
+    <!-- 设置 -->
+    <section id="tab-settings" class="ms-tab">
+      <header class="ms-page-head">
+        <div>
+          <h1 class="ms-page-title" data-i18n="ms_nav_settings">设置</h1>
+        </div>
+        <button class="ms-btn ms-btn-primary" id="btn-cfg-save" data-i18n="ms_save">保存</button>
+      </header>
+      <div id="settings-form" class="ms-settings"></div>
+    </section>
+  </main>
+</div>
+
+<script>
+/*__APP_JS__*/
+</script>
+</body>
+</html>

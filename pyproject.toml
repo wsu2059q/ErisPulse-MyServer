@@ -1,17 +1,38 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "ErisPulse-MyServer"
-version = "1.0.0"
-description = "服务器管理模块 - 支持远程监控、WebSocket终端、Dashboard管理"
+version = "2.0.0"
+description = "AI 原生机房：聊天平台里的服务器管理 —— SSH 会话托管、舰队监控告警、危险命令确认、玻璃控制台"
 readme = "README.md"
 requires-python = ">=3.10"
-license = { file = "LICENSE" }
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [ { name = "wsu2059q", email = "wsu2059@qq.com" } ]
 dependencies = [
     "asyncssh>=2.14.0",
+    "ErisPulse-Cron>=1.0.0",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8.0",
 ]
 
 [project.urls]
 "homepage" = "https://github.com/wsu2059q/ErisPulse-MyServer"
+"Issues" = "https://github.com/wsu2059q/ErisPulse-MyServer/issues"
 
 [project.entry-points."erispulse.module"]
 "MyServer" = "MyServer:Main"
+
+[tool.setuptools.packages.find]
+include = ["MyServer*"]
+
+[tool.setuptools.package-data]
+"MyServer.dashboard" = ["static/*", "static/vendor/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

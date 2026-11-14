@@ -1,0 +1,12 @@
+# Ruff 基线：与同生态其它模块保持一致（E4/E7/E9/F）
+line-length = 120
+target-version = "py310"
+
+exclude = [
+    "data",
+    "config",
+    ".venv",
+]
+
+[lint]
+select = ["E4", "E7", "E9", "F"]

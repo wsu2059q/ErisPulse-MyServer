@@ -22,5 +22,5 @@ COPY MyServer/ ./MyServer/
 RUN uv pip install --system -e .
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    openssh-client \
+    openssh-client tmux \
     && rm -rf /var/lib/apt/lists/*
