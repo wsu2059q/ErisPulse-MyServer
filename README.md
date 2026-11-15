@@ -14,7 +14,27 @@
 
 把你的小鸡（VPS）、你和你的机器人连起来：在 QQ / Telegram / 云湖 / Kook 等聊天窗口里看状态、跑命令、传文件、收告警；装上 [QvQChat](https://github.com/wsu2059q/ErisPulse-QvQChat) 后更进一步——AI 直接替你管机器，说「看看 web-1 什么情况」「把这个日志拉下来」就行。
 
-与 SSH 客户端的本质差别：
+## 界面
+
+控制台（概览 / 终端 / 文件 / 监控 / 审计，五语可切）：
+
+![控制台](.github/assets/console.png)
+
+终端跑在远端 tmux 里，断线重连即恢复：
+
+![终端](.github/assets/terminal.gif)
+
+聊天窗口里直接看状态、跑命令（演示 bot 小eris，看板娘人设）：
+
+![聊天查状态](.github/assets/chat-fleet.png)
+![聊天跑命令](.github/assets/chat-exec.png)
+
+监控曲线与审计（AI 的操作也在）：
+
+![监控](.github/assets/monitor.png)
+![审计](.github/assets/audit.png)
+
+## 与 SSH 客户端的本质差别：
 
 - **会话托管**：终端跑在远端 tmux 里，MyServer 重启、断线、换设备都不丢现场，重连即恢复；聊天窗口与网页终端挂在同一会话上，两处看到同一份输出
 - **危险命令防线**：`rm -rf /`、`mkfs`、`dd of=/dev/`、`shutdown` 这类命令自动拦截，三端（聊天 / 网页 / AI）统一二次确认，令牌单次有效 120 秒
@@ -24,11 +44,7 @@
 
 <p>
 
-  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.10+-FFD43B?style=for-the-badge&logo=python&logoColor=blue" alt="Python"></a>
-
-  <a href="https://github.com/ErisPulse/ErisPulse"><img src="https://img.shields.io/badge/ErisPulse-2.8.0+-00A3FF?style=for-the-badge" alt="ErisPulse"></a>
-
-  <a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge" alt="License"></a>
+  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.10+-FFD43B?style=for-the-badge&logo=python&logoColor=blue" alt="Python"></a> <a href="https://github.com/ErisPulse/ErisPulse"><img src="https://img.shields.io/badge/ErisPulse-2.8.0+-00A3FF?style=for-the-badge" alt="ErisPulse"></a> <a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge" alt="License"></a>
 
 </p>
 
